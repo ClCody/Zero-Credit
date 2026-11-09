@@ -18,6 +18,23 @@ CREATE TABLE IF NOT EXISTS users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+-- 1.1. Журнал посещаемости и академических активностей студентов
+CREATE TABLE IF NOT EXISTS attendance_records (
+    id SERIAL PRIMARY KEY,
+    session_id INT REFERENCES audit_logs(id) ON DELETE SET NULL,
+    student_id BIGINT REFERENCES users(telegram_id) ON DELETE CASCADE,
+    subject_name VARCHAR(128) NOT NULL,
+    session_type VARCHAR(32) NOT NULL, -- 'lecture', 'practice', 'lab'
+    present BOOLEAN DEFAULT TRUE,
+    recitation BOOLEAN DEFAULT FALSE,
+    lab_submitted BOOLEAN DEFAULT FALSE,
+    lab_first_three BOOLEAN DEFAULT FALSE,
+    xp_awarded INT DEFAULT 0,
+    chips_awarded INT DEFAULT 0,
+    keys_awarded INT DEFAULT 0,
+    recorded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 -- 2. Преподаватели (Боссы)
 CREATE TABLE IF NOT EXISTS bosses (
     id SERIAL PRIMARY KEY,

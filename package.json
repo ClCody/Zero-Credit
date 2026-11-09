@@ -1,0 +1,20 @@
+{
+  "name": "zero-credit",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Zero Credit - Grotesque Cyber-Carnival TWA for DIBBB-11 (AGTU)",
+  "scripts": {
+    "dev": "concurrently -k -n \"CLIENT,SERVER\" -c \"cyan,magenta\" \"npm run dev:client\" \"npm run dev:server\"",
+    "dev:client": "npm --prefix client run dev",
+    "dev:server": "powershell -Command \"$env:PYTHONPATH='server'; .\\.venv\\Scripts\\python.exe -m uvicorn app.main:app --reload --host 127.0.0.1 --port 8000\"",
+    "build": "npm --prefix client run build",
+    "lint": "npm run lint:client && npm run lint:server",
+    "lint:client": "npm --prefix client run lint",
+    "lint:server": ".\\.venv\\Scripts\\ruff check server",
+    "test": "npm run test:server",
+    "test:server": "powershell -Command \"$env:PYTHONPATH='server'; .\\.venv\\Scripts\\pytest server/tests\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
